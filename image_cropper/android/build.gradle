@@ -7,9 +7,9 @@ buildscript {
         mavenCentral()
         maven { url "https://www.jitpack.io" }
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
+        // Atualize para uma versão recente do Android Gradle Plugin para suportar namespace
+        classpath 'com.android.tools.build:gradle:8.2.1'
     }
 }
 
@@ -24,19 +24,26 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    // Conditional for compatibility with AGP <4.2.
-    if (project.android.hasProperty("namespace")) {
-        namespace 'vn.hunghd.flutter.plugins.imagecropper'
-    }
+    // Defina o namespace de forma incondicional
+    namespace 'vn.hunghd.flutter.plugins.imagecropper'
+    
     compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    
+    // Configurações de compilação Java
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
     lintOptions {
         disable 'InvalidPackage'
     }
+    
     dependencies {
         implementation 'com.github.yalantis:ucrop:2.2.10'
         implementation 'androidx.preference:preference:1.2.1'
